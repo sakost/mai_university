@@ -1,0 +1,11 @@
+add square
+0 0 0 1 1 1 1 0
+add rectangle
+0 0 1 0 1 2 0 2
+get 0
+print all
+print center
+delete 0
+get 0
+print area
+exit

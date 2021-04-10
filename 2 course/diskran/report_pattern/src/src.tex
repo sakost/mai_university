@@ -1,0 +1,152 @@
+\section{Описание}
+Требуется написать реализацию поиска образца в строке, используя алгоритм Кнута-Морриса-Пратта с алфавитом в виде чисел от $0$ до $2^{32}-1$.
+
+Для начала исходная строка конкатенируется с образцом в таком формате: $p + \# + s$.
+Основная идея в поиске подстрок данного алгоритма заключается в том, что предварительно считается, т.н. \enquote{префиксная функция}.
+Идея данной функции заключается в том, что на $i$-й позиции она содержит максимально возможное число $k$, такое, что
+$s[0\dots{}k-1] = s[i-k+1\dots{}i]$, где $s$ - исодная строка.
+Имея исходную строку $p + \# + s$, мы заключаем, что наша задача сводится к задаче поиска значнеия элемена в префикс-функции,
+которое будет равно длине образца.
+
+В наивном алгоритме префикс-функции будет учавствовать, по меньшей мере, 2 цикла и одно сравнение строк, что не очень эффективно ($O(n^3)$).
+В ходе некоторых рассуждений, можно заключить, что $\pi[i+1]$ никак не может превысить число $\pi[i] + 1$,
+что позволяет нам уже добиться сложности $O(n^2)$.
+
+Затем, можно заметить, что если $s[i+1] = s[\pi[i]]$, то мы можем с уверенностью сказать, что $\pi[i+1] = \pi[i] + 1$.
+Однако же если $s[i+1] \neq s[\pi[i]]$, тогда следует попытаться подобрать подстроку меньшей длины, которая будет такой наибольшей, что $j<\pi[i]$,
+и будет по-прежнему выполняться префикс-свойство в позиции $i$ ($s[0\dots{}j-1] = s[i-j+1\dots{}i]$).
+
+Формула для нахождения такого $j$: $j=\pi[j-1]$. Причем применять её следует, пока $s[i] \neq s[j]$, либо пока $j > 0$(в ином случае префикс-функция в данной позиции равна $0$).
+\pagebreak
+
+\section{Исходный код}
+Файл \texttt{main.cpp}:
+\begin{lstlisting}[language=C++]
+	#include <iostream>
+	#include <sstream>
+	#include <string>
+	#include <vector>
+	
+	using namespace std;
+	
+	using TValue = uint64_t;
+	const TValue shebang = (1ull << 32ull);
+	
+	// todo: can replace with getline with three args
+	vector<TValue> GetClause() {
+		TValue c;
+		vector<TValue> cl;
+		std::string line;
+		if(!std::getline(cin, line)){
+			throw exception();
+		}
+		std::istringstream iss(line);
+		while ( iss >> c) {
+			cl.push_back(c);
+		}
+		return cl;
+	}
+	
+	void BuildZFunction(vector<TValue> &pattern, vector<TValue> &pi){
+		for (size_t i = 1; i < pattern.size(); ++i) {
+			TValue j = pi.at(i-1);
+			while(j > 0 && pattern.at(i) != pattern.at(j)){
+				j = pi.at(j-1);
+			}
+			if(pattern.at(i) == pattern.at(j)) j++;
+			pi.at(i) = j;
+		}
+	}
+	
+	
+	int main() {
+		ios_base::sync_with_stdio(false);
+		cin.tie(nullptr); cout.tie(nullptr);
+	
+		vector<TValue> pattern = GetClause();
+		pattern.push_back(shebang);
+		vector<TValue> pi(pattern.size(), 0);
+		BuildZFunction(pattern, pi);
+	
+		vector<size_t> rowsLength;
+	
+		size_t wordInd(0), rowInd(0);
+		TValue curPi = 0;
+	
+		while(true){
+			vector<TValue> row;
+			try {
+				row = GetClause();
+			} catch (exception& err) {
+				break;
+			}
+	//        if(row.empty()) continue;
+			for (auto& el: row) {
+				while(curPi > 0 && el != pattern.at(curPi)){
+					curPi = pi.at(curPi - 1);
+				}
+				if(el == pattern.at(curPi)) ++curPi;
+				if(curPi == pattern.size()-1){
+					size_t ro = rowInd + 1, wo = wordInd + 1;
+					int64_t ind = -1;
+					size_t pattern_size = pattern.size()-1;
+					while(pattern_size > wo){
+						pattern_size -= wo;
+						ro--;
+						wo = *next(rowsLength.end(), ind--);
+					}
+					wo -= pattern_size - 1;
+					cout << ro << ", " << wo << '\n';
+				}
+				wordInd++;
+			}
+			wordInd = 0;
+			rowInd++;
+			rowsLength.push_back(row.size());
+		}
+	}
+	
+\end{lstlisting}
+
+\pagebreak
+
+\section{Консоль}
+\begin{alltt}
+	sakost@sakost-pc ~/university/2 course/diskran/lab2 ‹master*›$ cmake-build-debug/lab4
+	1 1 1 2 1
+	1 1 1 2 1 1 1 2 1
+	1 1 2
+	0 1 2 1 10
+	1
+	
+	1
+	
+	
+
+	1 2
+	
+	
+	1
+	0
+	1, 1
+	1, 5
+	4, 1
+	
+	sakost@sakost-pc ~/university/2 course/diskran/lab2 ‹master*›$ cmake-build-debug/lab4
+	1
+	1 2 1 2 1 1
+	
+	1
+	
+	
+	0
+	1
+	1, 1
+	1, 3
+	1, 5
+	1, 6
+	3, 1
+	7, 1
+\end{alltt}
+\pagebreak
+

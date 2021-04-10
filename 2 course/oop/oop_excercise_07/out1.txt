@@ -1,0 +1,10 @@
+> Input the name of figure(triangle, rect or square): Input size of first side: Input size of second side: Rectangle successfully added
+> > Ok
+> Input the name of figure(triangle, rect or square): Input coordinates of three vertexes: first:  second:  third: Triangle successfully added
+> > Area of triangle is 0.5
+> Input the name of figure(triangle, rect or square): Input size of side: Square successfully added
+> > Area of triangle is 0.5
+Area of square is 16
+> triangle: 3 0 0 0 1 1 0 
+square: 4 0 0 0 4 4 4 4 0 
+> 

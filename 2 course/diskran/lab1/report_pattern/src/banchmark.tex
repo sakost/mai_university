@@ -1,0 +1,34 @@
+\section{Тест производительности}
+
+Тест производительности представляет из себя следующее: имеется $100000$ пар \enquote{ключ-значение} и осуществляется ввод этих данных в программу, затем происходит сортировка с помощью карманной сортировки:
+
+
+\begin{alltt}
+  sakost $ make benchmark
+  g++ -std=c++17 -O3 -c benchmark.cpp -o benchmark.o
+  g++ benchmark.o -o benchmark
+  
+  sakost $./benchmark < tests/06.t > /dev/null
+  input 124 ms
+  custom bucket sort 36 ms
+  stable sort from std 24 ms
+  output 28 ms
+  
+  sakost $./benchmark < tests/07.t > /dev/null
+  input 601 ms
+  custom bucket sort 578 ms
+  stable sort from std 205 ms
+  output 269 ms
+  
+  sakost $ ./benchmark < tests/08.t > /dev/null
+  input 5413 ms
+  custom bucket sort 6519 ms
+  stable sort from std 2976 ms
+  output 2741 ms 
+  
+\end{alltt}
+
+$std::stable\_sort$ чуть более, чем в два раза быстрее карманной сортировки, написанной мною. Данный разрыв можно объяснить тем, что стандартная сортировка работает в более оптимизированном варианте, ориентированном на скорость, а не на просто реализацию, как в моей версии.
+Также в карманной сортировке происходит множество операций копирования и вставки(в конец вектора), чего нельзя сказать о стандартной сортировке, в которой все сортируется in-place.
+\pagebreak
+

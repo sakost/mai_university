@@ -1,0 +1,78 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[left=17mm, top=17mm, right=17mm, bottom=0mm, headsep=1em]{geometry} % лист а4, 12 кегль, тип документа - статья
+\usepackage[utf8]{inputenc}  % кодировка вводимого текста
+\usepackage[english, russian]{babel}  % подключение словарей с переносами англ и рус яз
+\usepackage{amssymb, latexsym, amsmath}  % пакеты для работы с мат символами
+\usepackage{indentfirst}  %  каждый абзац с красной строки
+\setlength{\parindent}{4ex}
+\linespread{0.4} % межстрочный интервал
+ 
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{enumitem}
+
+\usepackage{fancyhdr}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Саженов Константин Станиславович}
+\lhead{Группа М8О-108Б-19}
+\chead{Вариант 22}
+% \rfoot{Page \thepage}
+\setlength{\headheight}{28pt}
+% \set
+
+\begin{document}
+\section*{Задание \RNum{5}}
+\paragraph{Текст задания}
+Определить, являются ли полем или кольцом векторы размерности 3 с элементами из R и с
+операциями поэлементного сложения и
+умножения. Проверить, существуют ли делители нуля.
+\paragraph{Решение}
+$(M, +, \times)$, $M \in \mathbb{R}^{1\times3}$
+
+$ A = \begin{pmatrix}
+    a \\ b \\ c
+\end{pmatrix}$
+
+\begin{enumerate}
+    \item $'+'$ \begin{enumerate}
+        \item $ A + B = B + A $ - коммутативность(по свойствам векторов)
+        \item $ A + (B + C) = (A + B) + C $ - ассоциативность(по свойствам векторов)
+        \item $ e_{+} = \begin{pmatrix}
+            0 \\ 0 \\ 0
+        \end{pmatrix} \in M$
+        \item $ A_{+}^{-1} = -A = \begin{pmatrix}
+            -a \\ -b \\ -c
+        \end{pmatrix}$
+        \item $ A + B \in M $ - замкнутость
+    \end{enumerate}
+    \item $'\cdot' $ (без $e_{+}$) \begin{enumerate}
+        \item $ A \cdot B \in M $ -  замкнутость
+        \item $ (A \cdot B) \cdot C = A \cdot (B \cdot C) $ - ассоциативность(св-ва векторов)
+        \item $ e_{\times} = \begin{pmatrix}
+            1 \\ 1 \\ 1
+        \end{pmatrix} \in M $
+        \item $ A \cdot B = B \cdot A $ - коммутативность
+        \item $ A_{\times}^{-1} $ вектора не $ \exists $. $ \begin{pmatrix}
+            1 \\ 0 \\ 0
+        \end{pmatrix} $ - не обратима
+    \end{enumerate}
+    \item Дистрибутивность \\ $ a \cdot (b + c) = \begin{pmatrix}
+        x_a \\ y_a \\ z_a
+    \end{pmatrix}  \cdot \begin{pmatrix}
+        x_b + x_c \\ y_b + y_c \\ z_b + z_c
+    \end{pmatrix} = \begin{pmatrix}
+        x_a x_b + x_a x_c \\ y_a y_b + y_a y_c \\ z_a z_b + z_a z_c
+    \end{pmatrix} = ab + ac$ - в силу коммутативности умножения достаточно одного тождества
+    \item Делители нуля \\ $ \begin{pmatrix}
+        1 \\ 0 \\ 0
+    \end{pmatrix} \cdot \begin{pmatrix}
+        0 \\ 1 \\ 0
+    \end{pmatrix} = e_{+} $
+\end{enumerate}
+\paragraph{Ответ:} данная структура образует коммутативное кольцо с делителями нуля 
+
+\end{document}

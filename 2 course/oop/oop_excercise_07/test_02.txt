@@ -1,0 +1,23 @@
+add
+rect
+2 4
+add
+rect
+10 1
+print
+area
+pop
+undo
+print
+area
+export
+test_doc.txt
+new
+Y
+print
+area
+import
+test_doc.txt
+print
+area
+exit

@@ -1,0 +1,71 @@
+\documentclass{article}
+
+% set font encoding for PDFLaTeX, XeLaTeX, or LuaTeX
+\usepackage{ifxetex,ifluatex}
+\if\ifxetex T\else\ifluatex T\else F\fi\fi T%
+\usepackage{fontspec}
+\else
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\fi
+
+\usepackage{hyperref}
+\usepackage[russian]{babel}
+
+\usepackage{sagetex}
+
+% \title{Title of Document}
+% \author{Name of Author}
+
+% Enable SageTeX to run SageMath code right inside this LaTeX file.
+% http://doc.sagemath.org/html/en/tutorial/sagetex.html
+% \usepackage{sagetex}
+
+% Enable PythonTeX to run Python – https://ctan.org/pkg/pythontex
+% \usepackage{pythontex}
+
+\begin{document}
+	% \maketitle
+	
+	\begin{center}
+		\Large{\textbf{Лабораторная работа 2. Задание 3 -- привидение поверхности второго порядка к каноническому виду.}}
+	\end{center}
+	
+	
+	\section{Задание}
+	\begin{enumerate}
+		\item Привести поверхность, заданную уравнением, к каноническому виду.
+		\item Построить исходную поверхность и поверхность в каноническом виде.
+		\item Собственные числа и вектора рассчитать вручную, сравнить с результатом встроенных функций.
+	\end{enumerate}
+	
+	\begin{center}
+		Вариант 7.
+	\end{center}
+	$$ 8*x^2 - 2*x*y - 4*y^2 + 2*x*z - 2*y*z + 3*z^2 + 7*x + 8*y + 9*z - 10 $$
+	
+	\section{Построение исходной поверхности}
+	
+	\begin{sagesilent}
+		var("x y z")
+	\end{sagesilent}
+	
+	\begin{sageblock}
+		f(x, y, z) =  8*x**2 - 2*x*y - 4*y**2 + 2*x*z - 2*y*z + 3*z**2 + 7*x + 8*y + 9*z - 10
+	\end{sageblock}
+	
+	Выведем считанную функцию на экран:
+	
+	\begin{center}
+		$\sage{f(x=x, y=y, z=z)}$
+	\end{center}
+	
+	Построим исходную поверхность.
+	
+	\begin{center}
+		\sageplot{implicit_plot3d(f(x=x, y=y, z=z), (x, -30, 10), (y, -30, 10), (z, -10, 30), figsize=3)}
+	\end{center}
+	
+	
+\end{document}

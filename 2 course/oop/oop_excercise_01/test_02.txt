@@ -1,0 +1,6 @@
+plus 6 6 12
+plus 6 -7 4
+mul 2 0 7
+div 0 3 7
+pow 2 0 3
+minus 2 -5 8a

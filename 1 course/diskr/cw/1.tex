@@ -1,0 +1,148 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[left=17mm, top=17mm, right=17mm, bottom=0mm, headsep=1em]{geometry} % лист а4, 12 кегль, тип документа - статья
+\usepackage[utf8]{inputenc}  % кодировка вводимого текста
+\usepackage[english, russian]{babel}  % подключение словарей с переносами англ и рус яз
+\usepackage{amssymb, latexsym, amsmath, mathtext, bm, gensymb, amssymb}  % пакеты для работы с мат символами
+\usepackage{indentfirst}  %  каждый абзац с красной строки
+\setlength{\parindent}{4ex}
+\linespread{0.4} % межстрочный интервал
+ 
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{enumitem}
+% \usepackage[T2A]{fontenc}
+
+\usepackage{fancyhdr}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Саженов Константин Станиславович}
+\lhead{Группа М8О-108Б-19}
+\chead{Вариант 22}
+% \rfoot{Page \thepage}
+\setlength{\headheight}{28pt}
+% \set
+
+% variables
+\newcommand{\E}{\begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}} % E matrix
+
+\newcommand{\A}{\begin{pmatrix}
+    0 & 1 & 1 & 1 \\
+    0 & 0 & 1 & 0 \\
+    0 & 1 & 0 & 0 \\
+    1 & 1 & 1 & 0
+\end{pmatrix}} % A matrix
+
+\newcommand{\Apowtwo}{\begin{pmatrix}
+    1 & 1 & 1 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 1 & 1 & 1
+\end{pmatrix}} % A ^ 2
+
+\newcommand{\T}{\begin{pmatrix}
+    1 & 1 & 1 & 1\\
+    0 & 1 & 1 & 0\\
+    0 & 1 & 1 & 0\\
+    1 & 1 & 1 & 1
+\end{pmatrix}} % T
+
+\newcommand{\Smatrix}{\begin{pmatrix}
+    1 & 0 & 0 & 1\\
+    0 & 1 & 1 & 0\\
+    0 & 1 & 1 & 0\\
+    1 & 0 & 0 & 1
+\end{pmatrix}} % S
+
+
+\newcommand{\Sone}{\begin{pmatrix}
+    0 & 0 & 0 & 0\\
+    0 & 1 & 1 & 0\\
+    0 & 1 & 1 & 0\\
+    0 & 0 & 0 & 0
+\end{pmatrix}} % S_1
+
+\newcommand{\Omatrix}{\begin{pmatrix}
+    0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0\\
+    0 & 0 & 0 & 0
+\end{pmatrix}} % S_2 == O
+
+\newcommand{\K}{
+    \begin{pmatrix}
+        0 & 0 & 0 & 1\\
+        0 & 0 & 1 & 0\\
+        0 & 1 & 0 & 0\\
+        1 & 0 & 0 & 0
+    \end{pmatrix}
+}
+
+
+\begin{document}
+\section*{Задание \RNum{1}}
+\paragraph{Текст задания} 
+Определить для орграфа, заданной матрицей смежности:
+$$ A = \begin{pmatrix}
+    0 & 1 & 1 & 1 \\
+    0 & 0 & 1 & 0 \\
+    0 & 1 & 0 & 0 \\
+    1 & 1 & 1 & 0
+\end{pmatrix} $$
+\begin{enumerate}[label=\asbuk*)]
+    \item матрицу односторонней связности
+    \item матрицу сильной связности
+    \item компоненты сильной связности
+    \item матрицу контуров
+\end{enumerate}
+\paragraph{Решение}
+\begin{enumerate}[label=\asbuk*)]
+    \item Найдем матрицу односторонней связности по формуле $ T = E \vee A \vee A^2 \vee A^3$:
+    $$ E = \E $$
+    $$
+    A = \A
+    $$
+    $$
+    A^2 = \A \ast \A = \Apowtwo
+    $$
+    $$
+    A^3 = \Apowtwo \ast \A = \A
+    $$
+
+    $$
+    T = \E \vee \A \vee \Apowtwo \vee \A = \T
+    $$
+    $ T = \T$ - матрица односторонней связности
+    \item Найдем матрицу сильной связности по формуле $ S = T \& T^T$:
+    $$ \bar{S} = \T \& 
+    \begin{pmatrix}
+        1 & 0 & 0 & 1\\
+        1 & 1 & 1 & 1\\
+        1 & 1 & 1 & 1\\
+        1 & 0 & 0 & 1
+    \end{pmatrix} = \Smatrix
+    $$
+    $ \bar{S} = \Smatrix$ - матрица сильной связности
+    \newpage
+    \item Компоненты сильной связности:
+    $$ \bar{S} = \Smatrix $$
+    $$ \{v_1, v_4\} \text{ -- первая компонента сильной связности} $$
+    $$ \bar{S}_1  = \Sone $$
+    $$ \{v_2, v_3\} \text{ -- вторая компонента сильной связности}$$
+    $$ \bar{S}_2 = \Omatrix = O $$
+    $$ \bar{S}_2 = O \Rightarrow \bar{S}_2 - \text{нулевая матрица, значит компонент больше нет} $$
+    \item Матрица контуров $ K = \bar{S} \& A $
+    $$ K = \Smatrix \& \A = \K \Rightarrow \text{дуги:} \left<v_1,v_4\right>, \left<v_4,v_1\right>, \left<v_2,v_3\right>, \left<v_3,v_2\right>$$
+\end{enumerate}
+\end{document}

@@ -1,0 +1,49 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[left=17mm, top=17mm, right=17mm, bottom=0mm, headsep=1em]{geometry} % лист а4, 12 кегль, тип документа - статья
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}  % кодировка вводимого текста
+\usepackage[english, russian]{babel}  % подключение словарей с переносами англ и рус яз
+\usepackage{amssymb, latexsym, amsmath}  % пакеты для работы с мат символами
+\usepackage{indentfirst}  %  каждый абзац с красной строки
+\setlength{\parindent}{4ex}
+\linespread{0.4} % межстрочный интервал
+ 
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{array}
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+
+\usepackage{fancyhdr}
+\usepackage{setspace}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Саженов Константин Станиславович}
+\lhead{Группа М8О-108Б-19}
+\chead{Вариант 22}
+% \rfoot{Page \thepage}
+\setlength{\headheight}{28pt}
+
+\begin{document}
+\section*{Задание \RNum{1}}
+\subsection*{Текст задания} Получить заданную функцию с помощью оператора примитивной рекурсии, используя
+оператор суперпозиции, а также функции $ S(x) = x + 1, O(x) = 0, I_m^n(x_1, ..., x_n) = x_m $(где $ 1 \le m \le n$), 
+$ \sigma(x_1, x_2) = x_1 + x_2 $.
+
+\subsection*{Решение}
+\noindent $ f(x, y) = (x + y)^2 $
+\singlespacing
+\noindent
+$ f(0, y) = y^2 $, \\
+$ f(x+1, y) = (x + y + 1)^2 = (x + y + 1)(x + y + 1) = x^2 + 2xy + y^2 + x + y + 1 = (x+y)^2 + x + y + 1 =
+z + x + y + 1 = \sigma(\sigma(S(x), y), z) = \sigma(\sigma(S(I_1(x, y, z)), I_2(x, y, z)), I_3(x, y, z))
+$
+\singlespacing \noindent
+$ f(x, 0) = x^2 $, \\ 
+$ f(x, y+1) = (x+y+1)^2 = z + x + y + 1 = \sigma(\sigma(S(x), y), z) = \sigma(\sigma(S(I_1(x, y, z)), I_2(x, y, z)), I_3(x, y, z))$
+\end{document}

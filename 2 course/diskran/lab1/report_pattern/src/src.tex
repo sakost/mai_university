@@ -1,0 +1,351 @@
+\section{Описание}
+Требуется написать реализацию алгоритма карманной сортировки. 
+
+Как сказано в \cite{neerc_wiki}: \enquote{карманная сортировка -- алгоритм сортировки, основанный на предположении о равномерном распределении входных данных.}.
+
+Идея карманной сортировки состоит в том, чтобы разбить исходные возможные значения в массиве на $n$ равных интервалов,
+где $n$ -- количество элементов в массиве, а затем пройтись по массиву, перемещая в созданные интервалы(называемые карманами), 
+элементы, которые в них попадают, а карманы, в свою очередь, отсортировать обычной сортировкой вставки.
+
+\pagebreak
+
+\section{Исходный код}
+Написание кода состояло из нескольких этапов:
+\begin{enumerate}
+	\item Прописать объявления основных функций, классов, методов(функций-членов) и полей класса
+	\item Написать прототип функции $main$, а именно:
+	\begin{enumerate}
+		\item Ввод-вывод данных
+		\item Запуск сортировки
+	\end{enumerate}
+	\item Реализовать основные функции и функции-члены для работы с векторами
+	\item Реализовать сортировку вставками
+	\item Реализовать карманную сортировку(используя сортировку вставками)
+	\item Написать Makefile
+\end{enumerate}
+
+На каждой непустой строке входного файла располагается пара \enquote{ключ-значение}, поэтому создадим новые 
+структуры $TKey$ и $TValue$, которые будут являться псевдонимами для входных типов данных(это сделано для универсальности кода), также, т.к. тип $NPair::TPair<NSort::TKey, NSort::TValue>$
+является слишком длинным, я решил сделать для него псевдоним $TData$.
+
+\paragraph{}
+Файл \texttt{main.cpp}:
+\begin{lstlisting}[language=C++]
+	#include <iostream>
+	#include <algorithm>
+	
+	#include "vector.h"
+	#include "pair.h"
+	#include "sort.h"
+	
+	
+	using TData = NPair::TPair<NSort::TKey, NSort::TValue>;
+	
+	int main() {
+		std::ios::sync_with_stdio(false);
+		std::cin.tie(nullptr);
+		std::cout.tie(nullptr);
+	
+		NVector::TVector<TData> vector;
+	
+		NSort::TKey key;
+		NSort::TValue value;
+		while(std::cin >> key >> value){
+			vector.PushBack(NPair::TPair<NSort::TKey, NSort::TValue>(key, value));
+		}
+	
+		NSort::BucketSort(vector);
+	
+		for (int i = 0; i < vector.Size(); ++i) {
+			std::cout << vector[i].First << ' ' << vector[i].Second << std::endl;
+		}
+	
+		return 0;
+	}
+\end{lstlisting}
+
+Файл \texttt{vector.h}:
+\begin{lstlisting}[language=C++]
+	#pragma once
+
+	#include <stdexcept>
+	#include <cstring>
+	
+	
+	namespace NVector {
+		const int DEFAULT_CAPACITY_MULTIPLIER = 2;
+	
+		template<typename T>
+		class TVector {
+		public:
+			TVector();
+	
+			explicit TVector(size_t newSize, const T &defaultValue = T());
+	
+			[[nodiscard]] size_t Size() const;
+	
+			[[nodiscard]] bool Empty() const;
+	
+			[[maybe_unused]] T *Begin() const;
+	
+			[[maybe_unused]] T *End() const;
+	
+	
+			TVector(const TVector &other);
+	
+			TVector &operator=(const TVector &other);
+	
+			~TVector();
+	
+			void Clear();
+	
+			[[maybe_unused]] void PushBack(T &element);
+	
+			void PushBack(const T &&element);
+	
+			const T &At(size_t index) const;
+	
+			T &At(size_t index);
+	
+			const T &operator[](size_t index) const;
+	
+			T &operator[](size_t index);
+	
+		private:
+			size_t Len{};
+			size_t Capacity{};
+			T *Arr;
+		};
+	}
+\end{lstlisting}
+Файл \texttt{pair.h}:
+\begin{lstlisting}[language=C++]
+//
+// Created by sakost on 02.10.2020.
+//
+
+#ifndef LAB1_PAIR_H
+#define LAB1_PAIR_H
+
+
+namespace NPair {
+
+    template<typename F, typename S>
+    class TPair {
+    public:
+        TPair();
+
+        TPair(F first, S second);
+
+        TPair(const TPair &other);
+
+        ~TPair()= default;
+
+        bool operator<(const TPair &other) const;
+
+        TPair &operator=(const TPair &other);
+
+
+        F First;
+        S Second;
+    };
+}
+
+
+#endif //LAB1_PAIR_H
+\end{lstlisting}
+
+Файл \texttt{sort.h}
+\begin{lstlisting}[language=C++]
+	//
+// Created by sakost on 02.10.2020.
+//
+
+#ifndef LAB1_SORT_H
+#define LAB1_SORT_H
+
+#include <cinttypes>
+#include <limits>
+#include <cassert>
+
+#include "vector.h"
+#include "pair.h"
+
+namespace NSort{
+    using TKey = std::uint64_t;
+    using TValue = std::uint64_t;
+
+    NPair::TPair<TKey, TValue> MaxElement(const NVector::TVector<NPair::TPair<TKey, TValue>> &vector);
+    NPair::TPair<TKey, TValue> MinElement(const NVector::TVector<NPair::TPair<TKey, TValue>> &vector);
+
+    void InsertionSort(NVector::TVector<NPair::TPair<TKey, TValue>> &vector);
+
+    void BucketSort(NVector::TVector<NPair::TPair<TKey, TValue>> &vector);
+}
+
+
+#endif //LAB1_SORT_H
+\end{lstlisting}
+
+Файл \texttt{benchmark.cpp}
+\begin{lstlisting}[language=C++]
+//
+// Created by sakost on 03.10.2020.
+//
+
+
+#include "pair.h"
+#include "vector.h"
+#include "sort.h"
+
+#include <iostream>
+#include <cstdint>
+#include <chrono>
+#include <algorithm>
+#include <random>
+
+int main() {
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+
+    NVector::TVector<NPair::TPair<NSort::TKey , NSort::TValue>> v;
+    NPair::TPair<NSort::TKey , NSort::TValue> pair;
+
+
+    auto start = std::chrono::steady_clock::now();
+    NSort::TKey key;
+    NSort::TValue value;
+    while (std::cin >> key >> value) {
+        pair.First = key;
+        pair.Second = value;
+        v.PushBack(pair);
+    }
+    auto finish = std::chrono::steady_clock::now();
+    auto dur = finish - start;
+    std::cerr << "input " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() << " ms" << std::endl;
+
+    start = std::chrono::steady_clock::now();
+    NSort::BucketSort(v);
+    finish = std::chrono::steady_clock::now();
+    dur = finish - start;
+    std::cerr << "custom bucket sort " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() << " ms" << std::endl;
+
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(v.Begin(), v.End(), g);
+
+    start = std::chrono::steady_clock::now();
+    std::stable_sort(v.Begin(), v.End());
+    finish = std::chrono::steady_clock::now();
+
+    dur = finish - start;
+    std::cerr << "stable sort from std " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() << " ms" << std::endl;
+
+    start = std::chrono::steady_clock::now();
+    for (size_t i = 0; i < v.Size(); i++) {
+        std::cout << v[i].First << ' ' << v[i].Second << '\n';
+    }
+    finish = std::chrono::steady_clock::now();
+    dur = finish - start;
+    std::cerr << "output " << std::chrono::duration_cast<std::chrono::milliseconds>(dur).count() << " ms" << std::endl;
+
+    return 0;
+}
+
+\end{lstlisting}
+
+
+Таблица 1, описывающая структуру программы:
+\begin{longtable}{|p{7.5cm}|p{7.5cm}|}
+\hline
+\rowcolor{lightgray}
+\multicolumn{2}{|c|} {vector.h}\\
+\hline
+class TVector&Класс, реализующий тип данных \enquote{вектор}\\
+\hline
+TVector()&Конструктор по умолчанию\\
+\hline
+explicit TVector(size\_t newSize, const T \&defaultValue = T())&Конструктор с заданием размера или и размера, и элемента по умолчанию\\
+\hline
+size\_t Size() const&Функция-член, возвращающая размер вектора\\
+\hline
+bool Empty() const&Функция-член, возвращающая значение, которое указывает, пустой ли вектор\\
+\hline
+T *Begin() const&Функция-член, возвращающая указатель на первый элемент вектора в памяти\\
+\hline
+T *End() const&Функция-член, возвращающая указатель на элемент, следующий за последним, в векторе в памяти\\
+\hline
+TVector(const TVector \&other)&Конструктор копирования\\
+\hline
+TVector \&operator=(const TVector \&other)&Оператор копирования\\
+\hline
+$\sim{}$TVector()&Деструктор класса\\
+\hline
+void Clear()&Функция-член очистки объекта\\
+\hline
+void PushBack(T \&element)&Функция-член добавления элемента в конец вектора(по ссылке)\\
+\hline
+void PushBack(T \&\&element)&Функция-член добавления элемента в конец вектора(по r-value)\\
+\hline
+const T \&At(size\_t index) const&Константная функция-член доступа к элементам данной коллекции\\
+\hline
+T \&At(size\_t index) &Функция-член доступа к элементам данной коллекции\\
+\hline
+const T \&operator[](size\_t index)const &Константный оператор доступа к элементам данной колекции(аналогично \texttt{At})\\
+\hline
+T \&operator[](size\_t index)&Оператор доступа к элементам данной колекции(аналогично \texttt{At})\\
+\hline
+\rowcolor{lightgray}
+\multicolumn{2}{|c|} {pair.h}\\
+\hline
+class TPair&Класс, реализующий тип данных \enquote{пара}\\
+\hline
+TPair()&Конструктор по-умолчанию\\
+\hline
+TPair(F first, S second)&Конструктор, явно указывающий элементы пары\\
+\hline
+TPair(const TPair \&other)&Конструктор копирования\\
+\hline
+$\sim{}$TPair() = default&Деструктор класса(по-умолчанию)\\
+\hline
+bool operator<(const TPair \&other) const&Оператор сравнения \enquote{меньше}\\
+\hline
+TPair \&operator=(const TPair \&other)&Оператор копирования\\
+\hline
+F first&Первый элемент пары\\
+\hline
+S second&Второй элемент пары\\
+\hline
+\rowcolor{lightgray}
+\multicolumn{2}{|c|} {sort.h}\\
+TKey &Тип ключа\\
+\hline
+TValue &Тип значения\\
+\hline
+NPair::TPair<TKey, TValue> MaxElement(const NVector::TVector<NPair::TPair<TKey, TValue>> \&vector)&Возвращает максимальный элемент вектора(по ключу)\\
+\hline
+NPair::TPair<TKey, TValue> MinElement(const NVector::TVector<NPair::TPair<TKey, TValue>> \&vector)&Возвращает минимальный элемент вектора(по ключу)\\
+\hline
+void BucketSort(NVector::TVector$<$ NPair::TPair$<$ TKey, TValue$>$$>$ \&vector)&Карманная сортировка\\
+\hline
+void InsertionSort(NVector::TVector$<$ NPair::TPair$<$TKey, TValue $>$$>$ \&vector)&Сортировка вставками\\
+\hline
+\end{longtable}
+
+\pagebreak
+
+\section{Консоль}
+\begin{alltt}
+sakost$ g++ -pedantic -Wall -std=c++17 -Werror -Wno-sign-compare lab1.cpp vector.h pair.h sort.h -o lab1
+sakost$ cat test1 
+1 4
+2 7
+1 8
+sakost$ ./lab1 < test1 
+1 4
+1 8
+2 4
+\end{alltt}
+\pagebreak
+

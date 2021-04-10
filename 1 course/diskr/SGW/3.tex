@@ -1,0 +1,87 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[left=17mm, top=17mm, right=17mm, bottom=0mm, headsep=1em]{geometry} % лист а4, 12 кегль, тип документа - статья
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}  % кодировка вводимого текста
+\usepackage[english, russian]{babel}  % подключение словарей с переносами англ и рус яз
+\usepackage{amssymb, latexsym, amsmath}  % пакеты для работы с мат символами
+\usepackage{indentfirst}  %  каждый абзац с красной строки
+\setlength{\parindent}{4ex}
+\linespread{0.4} % межстрочный интервал
+ 
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{array}
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+
+\usepackage{fancyhdr}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Саженов Константин Станиславович}
+\lhead{Группа М8О-108Б-19}
+\chead{Вариант 22}
+% \rfoot{Page \thepage}
+\setlength{\headheight}{28pt}
+% \set
+
+\begin{document}
+\section*{Задание \RNum{3}}
+\paragraph{Текст задания} Определить для заданной подгруппы $ H \in S_4$:
+\begin{enumerate}[label=\asbuk*),ref=\asbuk*]
+    \item элементы из $H$;
+    \item левые смежные классы группы $ S_4 $ по $ H $
+    \item правые смежные классы группы $ S_4 $ по $ H $
+    \item является ли $ H $  нормальной подгруппой?
+\end{enumerate}
+$ H =  \langle(132), (12)\rangle $
+\paragraph{Решение} 
+(132)(132) = (231) \\ (132)(12) = (23) \\ (12)(132) = (13) \\ (12)(12) = $\Pi_0 $
+\begin{center}
+    Таблица Кэли\\
+    \begin{tabular}{|c||c|c|c|c|c|c|}
+        \hline
+        $ H $ & $\Pi_{0}$ & (132) & (12) & (231) & (23) & (13) \\
+        \hline\hline
+        $ \Pi_0 $ & $ \Pi_0 $ & (132) & (12) & (231) & (23) & (13) \\
+        \hline
+        (132) & (132) & (231) & (23) & $\Pi_0$ & (13) & (12) \\
+        \hline
+        (12) & (12) & (13) & $ \Pi_0$ & (23) & (231) & (132) \\
+        \hline
+        (231) & (231) & $\Pi_0$ & (13) & (132) & (12) & (23) \\
+        \hline
+        (23) & (23) & (12) & (132) & (13) & $\Pi_0$ & (231) \\ 
+        \hline
+        (13) & (13) & (23) & (132) & (12) & (132) & $ \Pi_0 $ \\
+        \hline
+    \end{tabular}
+\end{center}
+$ H = \{\Pi_0, (132), (12), (13), (23) \} $ - 6 элементов.
+Количество смежных классов: $ \frac{|S_4|}{|H|} = \frac{4!}{6} = \frac{24}{6} = 4 $
+
+\begin{center}
+    ЛСК
+    \begin{enumerate}
+        \item $ \Pi_0H = \{\Pi_0 , (132), (12), (231), (13), (23) \}$
+        \item $(14)H = \{(14), (1324), (124), (1234), (134), (14)(23)\}$
+        \item $(24)H = \{ (24), (1342), (142), (1423), (24)(13), (234)\}$
+        \item $(34)H = \{(34, (1432), (34)(12), (1243), (143), (243)\}$
+    \end{enumerate}
+\end{center}
+
+\begin{center}
+    ПСК
+    \begin{enumerate}
+        \item $ H\Pi_0 = \{\Pi_0 , (132), (12), (231), (13), (23) \}$
+        \item $H(14) = \{(14), (1432), (142), (1423), (143), (23)(14)\}$
+        \item $H(24) = \{ (24), (2413), (241), (2431), (13)(24), (243)\}$
+        \item $H(34) = \{(34, (3421), (12)(34), (3412), (341), (342)\}$
+    \end{enumerate}
+\end{center}
+ЛСК $ \neq $ ПСК $\Longrightarrow H$ не является нормальным делителем 
+\end{document}

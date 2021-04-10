@@ -1,0 +1,16 @@
+import
+test_doc.txt
+pop
+pop
+undo
+add
+triangle
+0 0
+0 10
+1 0
+print
+area
+undo
+print
+area
+exit

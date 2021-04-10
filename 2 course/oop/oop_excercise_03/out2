@@ -1,0 +1,18 @@
+`add square`	=> Create square
+`add rectangle`	=> Create rectangle
+`add trapezoid`	=> Create trapezoid
+`get <INDEX>`	=> Print figure coordinates with index INDEX
+`print area`	=> Print all areas
+`print all`	=> Print sum of all areas
+`print center`	=> Print all centers
+`delete <INDEX>`	=> Delete the figure by given index INDEX
+`help`	=> Prints this message
+`exit`	=> Exit
+>>> type x1 y1 x2 y2 x3 y3 x4 y4: trapezoid successfully added to vector at index 0
+>>> Areas: 
+2
+>>> Centers: 
+Point( 0.5, 1.5 )
+>>> type x1 y1 x2 y2 x3 y3 x4 y4: square successfully added to vector at index 1
+>>> Total area: 3
+>>> Bye

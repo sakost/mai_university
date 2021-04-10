@@ -1,0 +1,22 @@
+> Input the name of figure(triangle, rect or square): Input size of first side: Input size of second side: Rectangle successfully added
+> > Input the name of figure(triangle, rect or square): Input size of first side: Input size of second side: Rectangle successfully added
+> > rectangle: 4 0 0 0 4 2 4 2 0 
+rectangle: 4 0 0 0 1 10 1 10 0 
+> Area of rectangle is 8
+Area of rectangle is 10
+> Ok
+> Ok
+> rectangle: 4 0 0 0 4 2 4 2 0 
+rectangle: 4 0 0 0 1 10 1 10 0 
+> Area of rectangle is 8
+Area of rectangle is 10
+> Input the name of file which export to: Document was successfully  added to file test_doc.txt
+> > Are you sure? This document will be overwritten[Y/n]: Ok removing...
+Created new document(and old was deleted if it was existed)
+> Nothing to show!
+> Nothing to show!
+> Input the name of file which import from: > > rectangle: 4 0 0 0 4 2 4 2 0 
+rectangle: 4 0 0 0 1 10 1 10 0 
+> Area of rectangle is 8
+Area of rectangle is 10
+> 

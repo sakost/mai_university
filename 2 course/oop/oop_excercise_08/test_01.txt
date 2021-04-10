@@ -1,0 +1,28 @@
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$ cmake-build-debug/oop_excercise_08 3
+> rect
+Input size of first side: 1
+Input size of second side: 2
+Rectangle successfully added
+> > square
+Input size of side: 7
+Square successfully added
+> > triangle
+Input coordinates of three vertexes: first: 0 0
+ second: 0 1
+ third: 1 0
+name: triangle area: 0.5 raw_data: 3 0 0 0 1 1 0
+name: square area: 49 raw_data: 4 0 0 0 7 7 7 7 0
+name: rectangle area: 2 raw_data: 4 0 0 0 2 1 2 1 0
+Triangle successfully added
+> >
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$ ls
+1608544611805.txt cmake-build-debug
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$ cat 1608544611805.txt
+name: triangle area: 0.5 raw_data: 3 0 0 0 1 1 0
+name: square area: 49 raw_data: 4 0 0 0 7 7 7 7 0
+name: rectangle area: 2 raw_data: 4 0 0 0 2 1 2 1 0
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$

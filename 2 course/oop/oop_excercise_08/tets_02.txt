@@ -1,0 +1,27 @@
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$ cmake-build-debug/oop_excercise_08 2
+> rect
+Input size of first side: 7
+Input size of second side: 19
+Rectangle successfully added
+> > square
+Input size of side: 0
+name: square area: 0 raw_data: 4 0 0 0 0 0 0 0 0
+name: rectangle area: 133 raw_data: 4 0 0 0 19 7 19 7 0
+Square successfully added
+> > square
+Input size of side: 7
+Square successfully added
+> >
+name: square area: 49 raw_data: 4 0 0 0 7 7 7 7 0
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$ cat 1608545032514.txt
+name: square area: 0 raw_data: 4 0 0 0 0 0 0 0 0
+name: rectangle area: 133 raw_data: 4 0 0 0 19 7 19 7 0
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$ cat 1608545048309.txt
+name: square area: 49 raw_data: 4 0 0 0 7 7 7 7 0
+╭─sakost@sakost-pc ~/university/2 course/oop/oop_excercise_08
+╰─$

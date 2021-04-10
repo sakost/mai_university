@@ -1,0 +1,121 @@
+\documentclass[oneside]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[left=5mm, top=13mm, right=25mm, bottom=29mm, footskip=10mm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{gensymb}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{mathtext}
+\usepackage[T1, T2A]{fontenc}
+\usepackage[english,russian]{babel}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[L]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[C]{МЕРА. ИЗМЕРИМЫЕ ФУНКЦИИ. ИНТЕГРАЛ}
+\fancyhead[R]{ГЛ \RNum{5}}
+\fancyfoot{}
+\setcounter{page}{280}
+
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+
+
+\fancypagestyle{sec}
+{
+\fancyhead[R]{\thepage}
+\fancyhead[C]{ЛЕБЕГОВО ПРОДОЛЖЕНИЕ МЕРЫ}
+\fancyhead[L]{\S 3}
+\renewcommand{\headrulewidth}{0pt}
+}
+
+\begin{document}
+\large
+    \textbf{Т е о р е м а 10.} \emph{Если} $A \subset \bigcup_{k=1}^n A_k$, \emph{то} $ \overline{\mu}(A)\leq \sum_{k=1}^n \overline{\mu}(A_k) $.%
+    \par\textbf{Т е о р е м а 11.} \emph{Если} $A_k \subset A(k=1, 2, \dots, n)$ \emph{и} $ A_i \cap A_j = \emptyset $\emph{, то}
+    \begin{align*}
+        \underline{\mu}(A) \geqslant \sum_{k=1}^n \underline{\mu}(A)
+    \end{align*}
+    \parОпределим теперь функцию $\mu$ на области
+    \begin{align*}
+        \mathfrak{G}_\mu = \mathfrak{R}^\ast
+    \end{align*}
+    как общее значение внешней и внутренней меры:
+    \begin{align*}
+        \mu(A) = \underline{\mu}(A) = \overline{\mu}(A).
+    \end{align*}
+    \parИз теорем 10 и 11 и из того очевидного обстоятельства, что для $A \in \mathfrak{R}$
+    \begin{align*}
+        \overline{\mu}(A) = \underline{\mu}(A) = m(A)
+    \end{align*}
+    вытекает следующее утверждение:
+    \par\textbf{Т е о р е м а 12.} \emph{Функция} $\mu(A)$ \emph{является мерой и продолжением меры} $m$.
+    \parИзложенное построение применимо  к любой мере $m$, опредеоенной на кольце.
+    В частности, его можно применить к множествам на плоскости. При этам за исходное кольцо принимается совокупность элементарных множеств
+    (т. е. конечных сумм приямоугольников). Кольцо элементарных множеств зависит, очевидно, от выбора системы координат на плоскости
+    (берутся приямоугольники со сторонами, параллельными осями координат). При переходе к плоской мере Жордана эта зависимость от 
+    выбора системы координат исчезает: отправляясь от любой системы координат $\{\overline{x}_1, \overline{x}_2\}$, связанной с первоначальной системой
+    $\{x_1, x_2\}$ ортогональным преобразованием
+    \begin{align*}
+        \overline{x}_1 &= \cos\alpha \cdot x_1 + \sin\alpha \cdot x_2 + a_1,\\
+        \overline{x}_2 &= -\sin\alpha\cdot x_1 + \cos\alpha\cdot x_2 + a_2,
+    \end{align*}
+    мы получим одну и ту же меру Жордана. Этот факт вытекает из следующей общей теоремы.
+    \par\textbf{Т е о р е м а 13.} \emph{Для того чтобы жордановы продолжения } $\mu_1 = i(m)1$
+    \emph{и} $\mu_2 = j(m_2)$ \emph{мер} $m_1$ \emph{и} $m_2$, \emph{определенных на кольцах} $\mathfrak{R}_1$ \emph{и} $\mathfrak{R}_2$
+    \emph{совпадали, необходимо и достаточно выполнения условий:}
+    \begin{align*}
+        \mathfrak{R}_1 \subset \mathfrak{G}_{\mu_2}, m_1(A) &= \mu_2(A) ~на~ \mathfrak{R}_1,\\
+        \mathfrak{R}_2 \subset \mathfrak{G}_{\mu_1}, m_2(A) &= \mu_1(A) ~на~ \mathfrak{R}_2.
+    \end{align*}
+    \par Если исходная мера $m$ определена не на кольце, а на полукольце $\mathfrak{G}_m$, то ее жордановым продолжением естественно назвать меру
+    $$j(m) = j(r(m)),$$
+    получающуюся в результате продолжения $m$ на кольцо $\mathfrak{R}(\mathfrak{G}_m)$ и дальнейшего продолжения по Жордану.
+    \par\textbf{5. Однозначность продолжения меры.} Если множество $A$ измеримо по Жордану относительно меры $\mu$, т.е. принадлежит
+    $\mathfrak{R}^\ast = \mathfrak{R}^\ast(\mathfrak{G}_m)$, то для любой меры $\overbrace{\mu}$, продолжающей $m$ и определенной на 
+    $\mathfrak{R}^\ast$, значение $\overline{\mu}(A)$ совпадает со значением $J(A)$ жорданова продолжения $J=j(m)$. 
+    Можно показать, что продолжение меры $m$ за пределы системы $\mathfrak{R}^\ast$ множеств, измеримых по Жордану, не будет однозначно.
+    Более точно это значит следующее. Назовем множество $A$\space\spaceм н о ж е с т в о м\space\spaceо д н о з н а ч н о с т и\space\space для меры $m$,
+    если:
+    \begin{enumerate}
+        \item существует мера, являющаяся продолжением меры $m$, определенная для множества $A$;
+        \newpage
+        \thispagestyle{sec}
+        \item для любых двух такого рода мер $\mu_1$ и $\mu_2$ $$ \mu_1(A) = \mu_2(A) $$
+    \end{enumerate}
+
+    \par Имеет место теорема: \emph{система множеств однозначности для меры} $m$ \emph{совпадает с системой множеств, измеримых по Жордану
+    относительно меры } $m,$ \emph{т. е. с кольцом} $\mathfrak{R}^\ast.$
+    \par Однако если рассматривать только $\sigma$-аддитивные меры и их продолжения($\sigma$-аддитивные),
+    то система множеств однозначности будет, вообще говоря, обширнее.
+    \par Так как именно случай $\sigma$-аддитивных мер наиболее важен, то введем следующее определение.
+    \par О п р е д е л е н и е 6. Множество $A$ называется \emph{множеством $\sigma$-однозначности} для $\sigma$-аддитивной меры $m$, если:
+    \begin{enumerate}
+        \item существует $\sigma$-аддитивное продолжение $\lambda$ меры $m$, определенное для $A$(т. е. такое, что $A \in \mathfrak{G}_\lambda$);
+        \item для всяких таких $\sigma$-аддитивных продолжений $\lambda_1$ и $\lambda_2$ справедливо равенство $$ \lambda_1(A) = \lambda_2(A).$$
+    \end{enumerate}
+    Если $A$ есть множество $\sigma$-однозначности для $\sigma$-аддитивной меры $\mu$, то в силу нашего определения существует единственно возможное значение $\lambda(A)$
+    для любого $\sigma$-аддитивного продолжения меры $\mu$, определенного на $A$.
+    \par Легко видеть, что каждое множество $A$, измеримое по Жордану, измеримо и по Лебегу(но не наоборот! приведите пример),
+    причем его жорданова и лебегова меры одинаковы. Отсюда непосредственно вытекает, что жорданово продолжение $\sigma$-аддитивной меры $\sigma$-аддитивно.
+    \par Каждое множество $A$, измеримое по Лебегу, является множеством $\sigma$-однозначности для исходной меры $m$.
+    Действительно, при любом $\varepsilon > 0$ для $A$ существует такое $B \in \mathfrak{R}$, что $\mu^\ast (A \triangle B) < \varepsilon$. 
+    Каково бы ни было определенное для $A$ продолжение $\lambda$ меры $m$, $$ \lambda(B) = m'(B), $$
+    так как продолжение $m'$ меры $m$ на $\mathfrak{R} = \mathfrak{R}(\mathfrak{G}_m)$ однозначно. Далее,
+    $$ \lambda(A \triangle B) \leqslant \mu^\ast(A\triangle B) < \varepsilon $$ и, следовательно, 
+    $$ |\lambda(A) - m'(B)| < \varepsilon.$$
+    \par Таким образом, для любых двух $\sigma$-аддитивных продолжений $\lambda_1$ и $\lambda_2$ меры $m$ имеем
+    $$ |\lambda_1(A) - \lambda_2(A)|<2\varepsilon, $$ откуда в силу произвольности $\varepsilon > 0$
+    $$ \lambda_1(A) = \lambda_2(A).$$
+    Можно показать, что система множеств, измеримых по Лебегу, исчерпывает всю систему множеств $\sigma$-однозначности для исходной меры $m$.
+    \par Пусть $m$ -- некоторая $\sigma$-аддитивная мера с областью определения $\mathfrak{G}$ и $\mathfrak{M} = L(\mathfrak{G})$ -- область определения ее лебегова продолжения.
+    Легко убедиться в том, что каково бы ни было полуколько $\mathfrak{G}_1$, удовлетворяющее условию 
+    $$ \mathfrak{G} \in \mathfrak{G}_1 \in \mathfrak{M},$$
+    всегда $$L(\mathfrak{G}_1) = L(\mathfrak{G}).$$
+\end{document}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+message Execute{
+    int64 client_id = 1;
+    enum MessageType{
+        PING=0;
+        CREATE=1;
+        EXEC=2;
+        REMOVE=3;
+        GET_MIN_DEPTH = 4;
+        EXIT_ALL = 5;
+        ERROR=10;
+    }
+    MessageType msg = 2;
+
+    repeated sint64 args = 3;
+
+    enum ErrorType{
+        NOT_FOR_ME=0;
+        OK=1;
+        NOT_AVAILABLE=2;
+        CUSTOM=10;
+    }
+    ErrorType error_type = 14;
+    string error_message = 15;
+}

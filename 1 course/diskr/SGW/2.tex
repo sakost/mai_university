@@ -1,0 +1,49 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[left=17mm, top=17mm, right=17mm, bottom=0mm, headsep=1em]{geometry} % лист а4, 12 кегль, тип документа - статья
+\usepackage[utf8]{inputenc}  % кодировка вводимого текста
+\usepackage[english, russian]{babel}  % подключение словарей с переносами англ и рус яз
+\usepackage{amssymb, latexsym, amsmath}  % пакеты для работы с мат символами
+\usepackage{indentfirst}  %  каждый абзац с красной строки
+\setlength{\parindent}{4ex}
+\linespread{0.4} % межстрочный интервал
+ 
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{enumitem}
+
+\usepackage{fancyhdr}
+
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Саженов Константин Станиславович}
+\lhead{Группа М8О-108Б-19}
+\chead{Вариант 22}
+% \rfoot{Page \thepage}
+\setlength{\headheight}{28pt}
+% \set
+
+\begin{document}
+\section*{Задание \RNum{2}}
+\paragraph{Текст задания}
+Для заданной подстановки из S8 определить:
+\begin{enumerate}[label=\asbuk*)]
+    \item разложение в произведение независимых циклов;
+    \item порядок подстановки;
+    \item разложение в произведение транспозиций;
+    \item четность подстановки.
+\end{enumerate}
+$ [(152)(37)(23578)(162)]^{-115} $
+\paragraph{Ответ}
+\begin{enumerate}[label=\asbuk*)]
+    \item $ [(152)(37)(23578)(162)]^{-115} = [(1678)(253)]^{-115} = (1678)^{-3}(253)^{-1} = (1678)(235)$
+    \item $ P = lcm(4,3) = 12 $ - порядок подстановки
+    \item Произведение транспозиций: $ (18)(17)(16)(25)(23) $
+    \item $ \varepsilon_{\pi} = 5$  - нечетная
+\end{enumerate}
+\end{document}

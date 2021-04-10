@@ -1,0 +1,12 @@
+> Input the name of file which import from: > > Ok
+> Ok
+> Ok
+> Input the name of figure(triangle, rect or square): Input coordinates of three vertexes: first:  second:  third: Triangle successfully added
+> > rectangle: 4 0 0 0 4 2 4 2 0 
+triangle: 3 0 0 0 10 1 0 
+> Area of rectangle is 8
+Area of triangle is 5
+> Ok
+> rectangle: 4 0 0 0 4 2 4 2 0 
+> Area of rectangle is 8
+> 
