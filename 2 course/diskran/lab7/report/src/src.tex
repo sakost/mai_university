@@ -1,0 +1,95 @@
+\section{Описание}
+Требуется решить задачу методом динамического программирования. \\
+\texttt{Динамическое программирование — это когда у нас есть задача, которую непонятно как решать, и мы разбиваем ее на меньшие задачи, которые тоже непонятно как решать. (с) А.Кумок} \cite{neerc_ifmo}
+\\
+Динамическое программирование -- метод программирования, при котором мы разбиваем исходную задачу на подзадачи и решаем эти "маленькие" подзадачи в каком-либо цикле.
+\\
+Данный метод применим к задачам с оптимальной подструктурой, выглядящим как набор перекрывающихся
+подзадач, сложность которых чуть меньше исходной: в этом случае время вычислений можно значительно сократить.
+Как правило, чтобы решить поставленную задачу, требуется решить отдельные части задачи(подзадачи), после чего объединить
+решения подзадач в одно общее решение. Часто многие из этих подзадач одинаковые или похожи друг на друга.
+Подход динамического программирования состоит в том, чтобы решить каждую отдельную задачу только один раз,
+сократив, тем самым, количество вычислений. Это особенно полезно в случаях, когда число повторяющихся подзадач эксоненциально велико.
+Этапы построения алгоритма решения задач динамическим программированием:
+\begin{itemize}
+	\item Описать структуру оптимального решения.
+	\item Составить рекурсивное решение для нахождения оптимального решения.
+	\item Вычислить значения, соответствующего оптимальному решению, методом восходящего анализа.
+	\item Непосредственное нахождение оптимального решения из полученной на предыдущих этапах информации.
+\end{itemize}
+
+\pagebreak
+
+\section{Исходный код}
+Идея решения данной задачи основывается на довольно простом наблюдении:
+На каждый разряд(в десятичной системе счисления) приходится ровно $ n/m - (10^{|str(n)|-1} - 1) / m $ чисел, которые меньше $n$ лексикографически и делятся на $m$, где $n$ -- само число, $m$ -- число из условия,
+$n/m$ -- сколько в принципе чисел делятся на $m$(которые меньше $n$), а $(10 ^ {\lfloor{}log_{10}(n)\rfloor{} - 1} - 1) / m$ -- кол-во чисел, делящихся на $m$, но больше $n$ лексикографически(для одного старшего разряда). Причем в данном выражении учитываются и числа меньших разрядов(то есть они тоже вычитаются).
+\\
+То есть итоговое решение это сумма предыдущего ответа(для предыдущего разряда) и приведенной выше формулы для данного разряда. Необходимо повторять данный алгоритм, пока $n > 0$.
+Файл \texttt{main.cpp}:
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cmath>
+#include <algorithm>
+
+
+int main() {
+    std::int64_t n, m;
+    std::cin >> n >> m;
+
+    std::vector<std::int64_t> dp;
+    dp.resize(std::to_string(n).size()+1);
+    dp[0] = -bool(n%m==0);
+
+    std::int64_t i(1);
+    while(n > 0){
+        dp[i] = n/m - ((std::int64_t)std::pow(10, std::to_string(n).size()-1) - 1) / m + dp[i-1];
+        n /= 10;
+        ++i;
+    }
+
+    std::cout << std::max(dp.back(), (std::int64_t)0) << std::endl;
+}
+\end{lstlisting}
+
+
+\pagebreak
+
+\section{Консоль}
+\begin{alltt}
+	sakost@sakost-pc ~/university/2 course/diskran/lab7
+	$ cmake -S . -B cmake-build-debug
+	-- The C compiler identification is GNU 11.1.0
+	-- The CXX compiler identification is GNU 11.1.0
+	-- Detecting C compiler ABI info
+	-- Detecting C compiler ABI info - done
+	-- Check for working C compiler: /sbin/cc - skipped
+	-- Detecting C compile features
+	-- Detecting C compile features - done
+	-- Detecting CXX compiler ABI info
+	-- Detecting CXX compiler ABI info - done
+	-- Check for working CXX compiler: /sbin/c++ - skipped
+	-- Detecting CXX compile features
+	-- Detecting CXX compile features - done
+	-- Configuring done
+	-- Generating done
+	-- Build files have been written to: /home/sakost/university/2 course/diskran/lab7/cmake-build-debug
+	sakost@sakost-pc ~/university/2 course/diskran/lab7
+	$ cmake --build cmake-build-debug --target lab7
+	[ 50%] Building CXX object CMakeFiles/lab7.dir/main.cpp.o
+	[100%] Linking CXX executable lab7
+	[100%] Built target lab7
+	sakost@sakost-pc ~/university/2 course/diskran/lab7
+	$ ./cmake-build-debug/lab7
+	42 3
+	11
+	sakost@sakost-pc ~/university/2 course/diskran/lab7
+	$
+
+
+	
+\end{alltt}
+\pagebreak
+

@@ -1,0 +1,78 @@
+\section{Тест производительности}
+
+
+% \begin{longtable}{|p{7.5cm}|p{7.5cm}|}
+%     \hline
+%     \rowcolor{lightgray}
+%     \multicolumn{2}{|c|} {Длина ключа от 1 до 3}\\
+%     \hline
+%     168616&PATRICIA\\
+%     \hline
+%     239682&Встроенная структура map\\
+%     \hline
+% \end{longtable}
+
+Наивное решение:
+\begin{lstlisting}[language=c++]
+    #include <algorithm>
+    #include <iostream>
+    #include <string>
+    #include <vector>
+
+    using namespace std;
+
+    int main() {
+        int n, m;
+        cin >> n >> m;
+        int count = 0;
+        for (long long i(n); i > 0ll; --i) {
+            auto s1 = to_string(i);
+            auto s2 = to_string(n);
+            if (i % m == 0 &&
+            lexicographical_compare(s1.begin(), s1.end(), s2.begin(), s2.end())) {
+                ++count;
+            }
+        }
+        cout << count << endl;
+    }
+\end{lstlisting}
+
+Сам замер:
+
+\begin{alltt}
+    sakost@sakost-pc ~/university/2 course/diskran/lab7
+    $ time ./cmake-build-debug/naive << EOL
+    10704020 59
+    EOL
+    13260
+    ./cmake-build-debug/naive <<<'10704020 59'  1,86s user 0,00s system 99% cpu 1,865 total
+    sakost@sakost-pc ~/university/2 course/diskran/lab7
+    $ time ./cmake-build-debug/lab7 << EOL
+    10704020 59
+    EOL
+    13260
+    ./cmake-build-debug/lab7 <<<'10704020 59'  0,01s user 0,00s system 9% cpu 0,075 total
+
+    sakost@sakost-pc ~/university/2 course/diskran/lab7
+    $ time ./cmake-build-debug/naive << EOL
+    107040200 59
+    EOL
+    132585
+    ./cmake-build-debug/naive <<<'107040200 59'  15,34s user 0,00s system 99% cpu 15,346 total
+    sakost@sakost-pc ~/university/2 course/diskran/lab7
+    $ time ./cmake-build-debug/lab7 << EOL
+    107040200 59
+    EOL
+    132585
+    ./cmake-build-debug/lab7 <<<'107040200 59'  0,01s user 0,00s system 78% cpu 0,009 total
+    sakost@sakost-pc ~/university/2 course/diskran/lab7
+    $
+
+
+\end{alltt}
+
+По такому небольшому бенчмарку сразу видно отставание наивного алгоритма, причем в разы.
+
+
+\pagebreak
+

@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+
+cmake-build-*/
+#report_pattern
+*.tar.gz
+venv/
+.venv/
+.idea/
