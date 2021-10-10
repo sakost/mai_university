@@ -1,6 +1,3 @@
-[submodule "2 course/os/os-course-work/soci"]
-	path = 2 course/os/os-course-work/soci
-	url = https://github.com/SOCI/soci.git
 [submodule "2 course/oop/oop_excercise_01"]
 	path = 2 course/oop/oop_excercise_01
 	url = https://github.com/sakost/oop_excercise_01.git
@@ -25,3 +22,6 @@
 [submodule "2 course/oop/oop_excercise_08"]
 	path = 2 course/oop/oop_excercise_08
 	url = https://github.com/sakost/oop_excercise_08
+[submodule "2 course/os/os_course_work"]
+	path = 2 course/os/os_course_work
+	url = https://github.com/sakost/os_course_work.git
