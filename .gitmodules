@@ -1,3 +1,27 @@
 [submodule "2 course/os/os-course-work/soci"]
 	path = 2 course/os/os-course-work/soci
 	url = https://github.com/SOCI/soci.git
+[submodule "2 course/oop/oop_excercise_01"]
+	path = 2 course/oop/oop_excercise_01
+	url = https://github.com/sakost/oop_excercise_01.git
+[submodule "2 course/oop/oop_excercise_02"]
+	path = 2 course/oop/oop_excercise_02
+	url = https://github.com/sakost/oop_excercise_02
+[submodule "2 course/oop/oop_excercise_03"]
+	path = 2 course/oop/oop_excercise_03
+	url = https://github.com/sakost/oop_excercise_03
+[submodule "2 course/oop/oop_excercise_04"]
+	path = 2 course/oop/oop_excercise_04
+	url = https://github.com/sakost/oop_excercise_04
+[submodule "2 course/oop/oop_excercise_05"]
+	path = 2 course/oop/oop_excercise_05
+	url = https://github.com/sakost/oop_excercise_05
+[submodule "2 course/oop/oop_excercise_06"]
+	path = 2 course/oop/oop_excercise_06
+	url = https://github.com/sakost/oop_excercise_06
+[submodule "2 course/oop/oop_excercise_07"]
+	path = 2 course/oop/oop_excercise_07
+	url = https://github.com/sakost/oop_excercise_07
+[submodule "2 course/oop/oop_excercise_08"]
+	path = 2 course/oop/oop_excercise_08
+	url = https://github.com/sakost/oop_excercise_08
