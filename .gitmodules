@@ -25,3 +25,6 @@
 [submodule "2 course/os/os_course_work"]
 	path = 2 course/os/os_course_work
 	url = https://github.com/sakost/os_course_work.git
+[submodule "2 course/os/6_8_lab"]
+	path = 2 course/os/6_8_lab
+	url = https://github.com/sakost/6_8_lab
