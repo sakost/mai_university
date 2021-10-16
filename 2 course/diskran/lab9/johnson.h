@@ -8,24 +8,7 @@
 #include "graph.h"
 
 #include <vector>
-#include <exception>
 #include <limits>
-#include <string>
-
-class TNegativeCycle: public std::exception
-{
-public:
-    explicit TNegativeCycle() : msg_("Negative cycle"){}
-
-    ~TNegativeCycle() noexcept override = default;
-
-    const char* what() const noexcept override {
-        return msg_.c_str();
-    }
-
-protected:
-    std::string msg_;
-};
 
 TGraph::AdjMatrix JohnsonAlgorithm(const TGraph& graph) noexcept(false);
 TGraph::AdjMatrix BellmanFord(const TGraph& graph, std::size_t src) noexcept(false);

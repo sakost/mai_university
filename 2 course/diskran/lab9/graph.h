@@ -8,6 +8,8 @@
 #include <cctype>
 #include <vector>
 #include <limits>
+#include <exception>
+#include <string>
 
 
 using TWeight = long long;
@@ -31,5 +33,20 @@ public:
     std::size_t count_vertexes{}, count_edges{};
 };
 
+
+class TNegativeCycle: public std::exception
+{
+public:
+    explicit TNegativeCycle() : msg_("Negative cycle"){}
+
+    ~TNegativeCycle() noexcept override = default;
+
+    const char* what() const noexcept override {
+        return msg_.c_str();
+    }
+
+protected:
+    std::string msg_;
+};
 
 #endif //LAB9_GRAPH_H
