@@ -1,3 +1,4 @@
+
 //
 // Created by sakost on 06.03.2021.
 //
@@ -5,36 +6,44 @@
 #ifndef DA_LAB_6_LONGARITHMETIC_H
 #define DA_LAB_6_LONGARITHMETIC_H
 
-#include <type_traits>
-#include <string>
-#include <vector>
-#include <string>
-#include <sstream>
-#include <iomanip>
 #include <cmath>
+#include <iomanip>
+#include <string>
+#include <type_traits>
+#include <vector>
 
+#ifdef FAST_MUL
+#include <complex>
+#else
+#include <sstream>
+#endif
+
+static const long double PI = std::acos(-1.l);
 
 class TInvalidOperands : public std::exception {
 public:
-    [[nodiscard]] const char *what() const noexcept override {
-        return "Invalid operands";
-    }
+    const char *what() const noexcept override { return "Invalid operands"; }
 };
 
-#ifdef USE_FFT
 
-#include <complex>
+namespace detail {
+    template<typename T, typename = std::enable_if<std::is_arithmetic_v<T>, T>>
+    constexpr T custom_constexpr_pow(const T &base, const T &power) {
+        T ans = 1;
+        for (size_t i(0); i < power; ++i) {
+            ans *= base;
+        }
+        return ans;
+    }
+}// namespace detail
 
-#endif
-
-
-//template<typename T>
+// template<typename T>
 class TLongArithmetic {
     using T = long long;
-//    static_assert(std::is_integral_v<T>, "Integral required.");
+    static_assert(std::is_integral_v<T>, "Integral required.");
 
     static const T BASE_COUNT_DIGITS = 5;
-    static const T BASE = std::pow(10, BASE_COUNT_DIGITS);
+    static const T BASE = detail::custom_constexpr_pow<T>(10, BASE_COUNT_DIGITS);
 
     friend std::ostream &operator<<(std::ostream &out, const TLongArithmetic &lhs);
 
@@ -46,7 +55,7 @@ class TLongArithmetic {
 public:
     TLongArithmetic() : TLongArithmetic(T()) {}
 
-    TLongArithmetic(T n) { // NOLINT(google-explicit-constructor)
+    TLongArithmetic(T n) {// NOLINT(google-explicit-constructor)
         mData.clear();
         if (n < BASE)
             mData.push_back(n);
@@ -57,9 +66,7 @@ public:
         Normalize();
     }
 
-    explicit TLongArithmetic(const std::vector<T> &data) {
-        mData = data;
-    }
+    explicit TLongArithmetic(const std::vector<T> &data) { mData = data; }
 
     explicit TLongArithmetic(std::string &input) {
         if (input.empty()) {
@@ -86,7 +93,7 @@ public:
 
     explicit operator std::string() const {
         if (mData.empty())
-            return std::string("0");
+            return "0";
         std::stringstream res;
         res << mData.back();
 
@@ -98,9 +105,9 @@ public:
     }
 
     bool operator==(const TLongArithmetic &rhs) const {
-        return this == &rhs || mData == rhs.mData || ((mData.empty() || (mData.size() == 1 && mData.front() == 0))
-                                                      && (rhs.mData.empty()
-                                                          || (rhs.mData.size() == 1 && rhs.mData.front() == 0)));
+        return this == &rhs || mData == rhs.mData ||
+               ((mData.empty() || (mData.size() == 1 && mData.front() == 0)) &&
+                (rhs.mData.empty() || (rhs.mData.size() == 1 && rhs.mData.front() == 0)));
     }
 
     bool operator!=(const TLongArithmetic &rhs) const {
@@ -111,13 +118,13 @@ public:
         if (mData.size() != rhs.mData.size()) {
             return mData.size() < rhs.mData.size();
         }
-        return std::lexicographical_compare(mData.rbegin(), mData.rend(), rhs.mData.rbegin(), rhs.mData.rend());
+        return std::lexicographical_compare(mData.rbegin(), mData.rend(),
+                                            rhs.mData.rbegin(), rhs.mData.rend());
     }
 
     bool operator>(const TLongArithmetic &rhs) const {
         return !(*this < rhs) && (*this != rhs);
     }
-
 
     bool operator<=(const TLongArithmetic &rhs) const {
         return (*this == rhs) || (*this < rhs);
@@ -175,27 +182,24 @@ public:
         return temp;
     }
 
-    TLongArithmetic &operator--() {
+    const TLongArithmetic &operator--() {
         *this -= 1;
         return *this;
     }
 
-    TLongArithmetic operator--(int) {
-        return --(*this);
-    }
+    const TLongArithmetic operator--(int) { return --(*this); }
 
-    TLongArithmetic &operator++() {
+    const TLongArithmetic &operator++() {
         *this += 1;
         return *this;
     }
 
-    TLongArithmetic operator++(int) {
-        return ++(*this);
-    }
+    const TLongArithmetic operator++(int) { return ++(*this); }
 
     TLongArithmetic &operator*=(const T &rhs) {
         T carry = (T) 0;
-        for (typename std::vector<T>::size_type i = 0; i < mData.size() || carry != 0; i++) {
+        for (typename std::vector<T>::size_type i = 0;
+             i < mData.size() || carry != 0; i++) {
             if (i == mData.size()) {
                 mData.push_back(0);
             }
@@ -221,8 +225,9 @@ public:
     TLongArithmetic operator*(const TLongArithmetic &rhs) const {
         TLongArithmetic res(0);
 
-#ifdef USE_FFT
-        std::vector<base> fa(mData.begin(), mData.end()), fb(rhs.mData.begin(), rhs.mData.end());
+#ifdef FAST_MUL
+        std::vector<base> fa(mData.begin(), mData.end()),
+                fb(rhs.mData.begin(), rhs.mData.end());
         std::size_t n = 1;
         while (n < std::max(fa.size(), fb.size())) {
             n <<= 1;
@@ -271,13 +276,15 @@ public:
         if (rhs == 0) {
             throw TInvalidOperands();
         }
-        if (*this == rhs) return 1;
-        if (*this < rhs) return 0;
+        if (*this == rhs)
+            return 1;
+        if (*this < rhs)
+            return 0;
 
         TLongArithmetic res, cv = 0;
         res.mData.resize(mData.size());
 
-        for (long long i = mData.size() - 1; i >= 0; --i) {
+        for (long long i = (long long) mData.size() - 1; i >= 0; --i) {
             cv.mData.insert(cv.mData.begin(), mData[i]);
             if (cv.mData.back() == 0) {
                 cv.mData.pop_back();
@@ -358,12 +365,13 @@ private:
         }
     }
 
-    T At(const vsizeType &i) const {
-        if (i < 0 || i >= mData.size()) return (T) 0;
+    [[nodiscard]] T At(const vsizeType &i) const {
+        if (i < 0 || i >= mData.size())
+            return (T) 0;
         return mData[i];
     }
 
-    std::string TrimLeadingZeroes(const std::string &input) {
+    static std::string TrimLeadingZeroes(const std::string &input) {
         ssizeType i = 0;
         while (input.size() != i - 1 && input[i] == '0') {
             i++;
@@ -371,13 +379,14 @@ private:
         return input.substr(i);
     }
 
-#ifdef USE_FFT
+#ifdef FAST_MUL
     using double_base = long double;
     using base = std::complex<double_base>;
 
     void FFT(std::vector<base> &a, bool inverse = false) const {
         std::vector<base>::size_type n = a.size();
-        if (n == 1) return;
+        if (n == 1)
+            return;
 
         std::vector<base> a0(n / 2), a1(n / 2);
         for (std::size_t i(0), j(0); i < n; i += 2, ++j) {
@@ -388,7 +397,7 @@ private:
         FFT(a0, inverse);
         FFT(a1, inverse);
 
-        double_base ang = 2 * M_PIl / n * (inverse ? -1 : 1);
+        double_base ang = 2 * PI / n * (inverse ? -1 : 1);
         base w(1), wn(std::cos(ang), std::sin(ang));
         for (std::size_t i = 0; i < n / 2; ++i) {
             a[i] = a0[i] + w * a1[i];
@@ -406,20 +415,16 @@ private:
     std::vector<T> mData;
 };
 
-
-std::ostream &
-operator<<(std::ostream &out, const TLongArithmetic &lhs) {
+std::ostream &operator<<(std::ostream &out, const TLongArithmetic &lhs) {
     out << (std::string) lhs;
     return out;
 }
 
-std::istream &
-operator>>(std::istream &in, TLongArithmetic &rhs) {
+std::istream &operator>>(std::istream &in, TLongArithmetic &rhs) {
     std::string inp;
     in >> inp;
     rhs = TLongArithmetic(inp);
     return in;
 }
 
-
-#endif //DA_LAB_6_LONGARITHMETIC_H
+#endif// DA_LAB_6_LONGARITHMETIC_H

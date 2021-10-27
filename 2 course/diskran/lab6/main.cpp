@@ -1,8 +1,7 @@
 #include <iostream>
-#include <string>
 #include <vector>
 
-//#define USE_FFT
+//#define FAST_MUL
 #include "longarithmetic.h"
 
 using namespace std;
@@ -15,9 +14,9 @@ int main() {
 
     TLongArithmetic a, b;
     std::vector<std::string> result = {"false", "true"};
-    
+
     char op;
-    while(std::cin >> a >> b >> op){
+    while (std::cin >> a >> b >> op) {
         try {
             switch (op) {
                 case '+':
@@ -47,7 +46,7 @@ int main() {
                 default:
                     cout << "Error\n";
             }
-        } catch (TInvalidOperands& e) {
+        } catch (TInvalidOperands &e) {
             cout << "Error\n";
         }
     }

@@ -2,20 +2,24 @@
 
 import sys
 import random
+import os
 
 # Максимально возможное значение числа.
-MAX_POW = 40
+MAX_POW = 20
 MAX_VALUE = 100 ** MAX_POW
 MIN_VALUE = 0
 
 MAX_POW_FOR_POW = 2
 
+
 def get_random_int(MM=None):
     if MM is None: MM = MAX_POW
     return random.randint(MIN_VALUE, 100 ** random.randint(1, MM))
 
+
 def get_random_nums(MM=None):
     return get_random_int(MM), get_random_int(MM)
+
 
 def get_answer(num1, num2, operation):
     if operation == "+":
@@ -42,6 +46,7 @@ def get_answer(num1, num2, operation):
         return str(num1 // num2)
     return None
 
+
 def main():
     # Ожидаем, что будет три аргумента: название программы,
     # путь до директории с тестами и количество тестов в каждом
@@ -55,12 +60,18 @@ def main():
     # Считываем количество тестов для каждой операции.
     tests_count = int(sys.argv[2])
 
+    # Создаем папку с тестами
+    try:
+        os.mkdir(f"{test_dir}")
+    except FileExistsError as exc:
+        raise FileExistsError(f"Папка {test_dir} уже существует. Переименуйте её или удалите") from exc
+
     # Пробегаемся по операциям, для которых мы хотим
     # сгенерировать тесты.
     for enum, operation in enumerate(["+", "-", "*", "<", "=", "^", "/"]):
         # Открываем файлы для записи самих тестов и ответов
         # к ним.
-        filename_pattern = f'{test_dir}/{enum+1:02}'
+        filename_pattern = f'{test_dir}/{enum + 1:02}'
         with open(f'{filename_pattern}.t', 'w') as test_file, \
                 open(f'{filename_pattern}.a', 'w') as answer_file:
             for _ in range(0, tests_count):
@@ -75,6 +86,7 @@ def main():
                 # в файл с ответами.
                 answer = get_answer(num1, num2, operation)
                 answer_file.write(f"{answer}\n")
+
 
 if __name__ == "__main__":
     main()
